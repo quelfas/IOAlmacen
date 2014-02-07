@@ -1,0 +1,17 @@
+http://localhost/data6/index.php?r=proveedor
+
+$this->widget('zii.widgets.jui.CJuiDatePicker',
+				array(
+					'model'=>$model,
+					'attribute'=>'fecha',
+					'language'=>'es',
+					'options'=>array(
+						'dateFormat'=>'yy-mm-dd',
+						'constrainInput'=>'false',
+						'duration'=>'fast',
+						'showAdmin'=>'slide',
+						),
+					)
+				);
+
+http://localhost/data6/index.php?r=factura
