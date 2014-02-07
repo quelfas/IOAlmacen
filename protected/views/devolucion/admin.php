@@ -3,13 +3,13 @@
 /* @var $model Devolucion */
 
 $this->breadcrumbs=array(
-	'Devolucions'=>array('index'),
-	'Manage',
+	'Devoluciones'=>array('index'),
+	'Administrar',
 );
 
 $this->menu=array(
-	array('label'=>'List Devolucion', 'url'=>array('index')),
-	array('label'=>'Create Devolucion', 'url'=>array('create')),
+	array('label'=>'Lista de Devolucion', 'url'=>array('index')),
+	array('label'=>'Crear Devolucion', 'url'=>array('create')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -26,7 +26,7 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1>Manage Devolucions</h1>
+<h1>Administrar Devoluciones</h1>
 
 <p>
 You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>

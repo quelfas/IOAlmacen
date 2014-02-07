@@ -3,16 +3,16 @@
 /* @var $model Devolucion */
 
 $this->breadcrumbs=array(
-	'Devolucions'=>array('index'),
-	'Create',
+	'Devoluciones'=>array('index'),
+	'Crear',
 );
 
 $this->menu=array(
-	array('label'=>'List Devolucion', 'url'=>array('index')),
-	array('label'=>'Manage Devolucion', 'url'=>array('admin')),
+	array('label'=>'Lista de Devoluciones', 'url'=>array('index')),
+	array('label'=>'Administrar Devoluciones', 'url'=>array('admin')),
 );
 ?>
 
-<h1>Create Devolucion</h1>
+<h1>Crear Devolucion</h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

@@ -3,12 +3,12 @@
 /* @var $dataProvider CActiveDataProvider */
 
 $this->breadcrumbs=array(
-	'Devolucions',
+	'Devoluciones',
 );
 
 $this->menu=array(
-	array('label'=>'Create Devolucion', 'url'=>array('create')),
-	array('label'=>'Manage Devolucion', 'url'=>array('admin')),
+	array('label'=>'Crear Devolucion', 'url'=>array('create')),
+	array('label'=>'Administrar Devoluciones', 'url'=>array('admin')),
 );
 ?>
 
