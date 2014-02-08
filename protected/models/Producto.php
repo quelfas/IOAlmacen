@@ -55,6 +55,7 @@ class Producto extends CActiveRecord
 		return array(
 			'entradas' => array(self::HAS_MANY, 'Entrada', 'idProducto'),
 			'operadors' => array(self::HAS_MANY, 'Operador', 'idProducto'),
+			'devolutions'=>array(self::HAS_MANY,'Devolucion','productoID'),
 		);
 	}
 
@@ -143,6 +144,16 @@ class Producto extends CActiveRecord
 		foreach ($dataProductoArreglo as $key1 => $value1) {
 			if($modelData==$key1)
 			 return CHtml::link($value1, array('producto/view', 'id'=>$modelData, 'task'=>'F'));
+		}
+	}
+
+	public function ToProductoCompleto($modelData)
+	{
+		$dataProductoArreglo = CHtml::listData(producto::model()->findAll(),'idproducto','productoCompleto');
+
+		foreach ($dataProductoArreglo as $key1 => $value1) {
+			if($modelData==$key1)
+			 return $value1;
 		}
 	}
 

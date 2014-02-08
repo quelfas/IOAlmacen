@@ -33,7 +33,7 @@ class DevolucionController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','autocomplete','autoCompleteSalida'),
+				'actions'=>array('create','update',),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -172,48 +172,4 @@ class DevolucionController extends Controller
 		}
 	}
 
-	/*jettison*/
-	public function actionAutoComplete(){
-		 if(Yii::app()->request->isAjaxRequest && isset($_GET['term']))
-           {
-
-     $name = $_GET['term'];
-     $criteria = new CDbCriteria;
-     $criteria->condition = "nParte LIKE :sterm";
-     $criteria->params = array(":sterm"=>"%$name%");
-    $query = Producto::model()->findAll($criteria);
-    $list = array();        
-    foreach($query as $q){
-        $data['value']= $q['idproducto'];
-        $data['label']= $q['nParte'];
-
-        $list[]= $data;
-        unset($data);
-    		}
-
-    	echo CJSON::encode($list);
-		}
-	}
-
-	public function actionAutoCompleteSalida(){
-		 if(Yii::app()->request->isAjaxRequest && isset($_GET['term']))
-           {
-
-     $name = $_GET['term'];
-     $criteria = new CDbCriteria;
-     $criteria->condition = "codProducto = :sterm";
-     $criteria->params = array(":sterm"=>"$name");
-    $query = Salida::model()->findAll($criteria);
-    $list = array();        
-    foreach($query as $q){
-        $data['value']= $q['idSalida'];
-        $data['label']= $q['idSalida']."<-->".$q['Fecha'];
-
-        $list[]= $data;
-        unset($data);
-    }
-
-    echo CJSON::encode($list);
-}
-}
 }

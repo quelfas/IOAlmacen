@@ -3,7 +3,17 @@
 /* @var $model Devolucion */
 /* @var $form CActiveForm */
 ?>
+<script type='text/javascript'>//<![CDATA[ 
+$(window).load(function(){
+$('#Devolucion_productoID').on('change', function() {
+  alert("Atencion!!! La Salida es "+this.value);
+  $("#Devolucion_salidaID").val(this.value);
+})
 
+
+});//]]>  
+
+</script>
 <div class="form">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
@@ -46,35 +56,50 @@
 	</div>
 
 	<div class="row">
+		<?php 
+		//por politicas de proteccion y acceso de datos el SuperAdmin tiene acceso a un año en el rango de fechas para el manejo de devoluciones
+		//el valor para los demas es de 30 dias
+				if (Yii::app()->user->checkAccess("SuperAdmin")) {
+					//vista de un aña al superAdmin
+					$rangeEnd = 360;
+					$SerchMessage = "<br>Segun politicas de control y acceso de datos";
+				} else {
+					//vista de 30 dias para no SuperAdmin
+					$rangeEnd = 30;
+					$SerchMessage = "";
+				}
+				
+		?>
 		<?php echo $form->labelEx($model,'productoID'); ?>
-		<?php echo $form->dropDownlist($model,'productoID',CHtml::ListData(salida::model()->findAll(),'codProducto','ProductoCompleto')); ?>
+		<div class="alert">
+  			<button type="button" class="close" data-dismiss="alert">&times;</button>
+  			<strong>Atencion!</strong> Solo se consultan los <?php echo $rangeEnd ?> ultimos dias de Envios. <?php echo $SerchMessage; ?>
+		</div>
+		
+		<?php
+			 $ListSalida = Yii::app()
+										->db
+										->createCommand()
+										->SELECT('idSalida, fecha, codEntrada, codProducto')
+										->FROM('salida') 
+										->WHERE('fecha BETWEEN DATE_SUB(CURDATE(), INTERVAL '.$rangeEnd.' DAY) AND CURDATE()')
+										->queryAll();
+			$volcado = array();
+			$volcado[]="seleccione";
+			foreach ($ListSalida as $key => $value) {
+				//print_r($value);
+				 $volcado[$value['idSalida'].".".$value['codEntrada']] = Producto::ToProductoCompleto($value['codProducto'])." Salida:".$value['fecha'];
+			}
+
+			echo $form->dropDownlist($model, 'productoID', $volcado);
+
+		?>
 		<?php echo $form->error($model,'productoID'); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'salidaID'); ?>
-		<?php if ($model->isNewRecord): ?>
-
-			<?php $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
-            'name'=>'salidaID',
-            //'value'=>'productoID',
-            'source'=>CController::createUrl('autoCompleteSalida'),
-            'htmlOptions'=>array('placeholder'=>'Esperando Datos'),
-            'options'=>array(
-            'showAnim'=>'fold',         
-            'minLength'=>'1',
-            'select'=>'js:function( event, ui ) {
-            			$("#salidaID").val( ui.item.label );
-                        $("#Devolucion_salidaID").val(ui.item.value);
-                        return false;
-                  }',
-            )
-            )); ?>
-			
-			<?php else: ?>
-			<?php echo $form->hiddenField($model,'salidaID'); ?>
-		<?php endif ?>
-		
+		<?php echo $form->textField($model,'salidaID'); ?>
 		<?php echo $form->error($model,'salidaID'); ?>
 	</div>
 
@@ -92,7 +117,10 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'AutoEntrada'); ?>
-		<?php echo $form->textField($model,'AutoEntrada'); ?>
+		<?php
+		$selectActionEntrada = array(1=>"Si", 2=>"No");
+		 echo $form->dropDownlist($model,'AutoEntrada', $selectActionEntrada); 
+		 ?>
 		<?php echo $form->error($model,'AutoEntrada'); ?>
 	</div>
 
