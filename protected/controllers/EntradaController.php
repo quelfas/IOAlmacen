@@ -32,7 +32,7 @@ class EntradaController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','autocomplete'),
+				'actions'=>array('create','update','autocomplete','cloneentrada'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -102,7 +102,7 @@ class EntradaController extends Controller
 			'model'=>$model,
 		));
 	}
-
+//
 	/**
 	 * Deletes a particular model.
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
@@ -188,10 +188,40 @@ class EntradaController extends Controller
 
         $list[]= $data;
         unset($data);
-    }
+    		}
 
     echo CJSON::encode($list);
-}
-}
+		}
+	}
+
+	public function actionCloneEntrada($id)
+	{
+		#se recibe el id de entrada ($modelData) con el cual se clonara el registro con fecha nueva
+		$crearEntradaDEV = Yii::app()
+							->db
+							->createCommand()
+							->SELECT('*')
+							->FROM('entrada') 
+							->WHERE('idEntrada='.$id)
+							->queryAll();
+		foreach ($crearEntradaDEV as $key => $value) {
+			//print_r($value);
+			$cantidad = $_GET['cant'];
+			$model = new Entrada;
+			$model->idFactura = $value['idFactura'];
+			$model->idProducto = $value['idProducto'];
+			$model->fecha = date("Y-m-d");
+			$model->cEntrada = $cantidad;
+			$model->codEntrada = time();
+			$model->ubicacion = "Area de Despacho";
+			$model->docEntrada = "DEVOLUCION ".time();
+			if($model->validate()){
+    			$model->save();
+    			$this->redirect(array('view','id'=>$model->idEntrada));
+			}else{
+    			print_r($model->errors);
+			}
+		}
+	}
 
 }

@@ -157,22 +157,4 @@ class Producto extends CActiveRecord
 		}
 	}
 
-	public function ejecutaString($dataString)
-	{
-		eval($dataString);
-	}
-	
-	/**
-	*public function resaltadorNparte($modelData,$g)
-	*{
-	*	//determinando si $objetivo esta definido
-	*	//defino lo que se va a reemplazar
-	*	if(isset($g)){
-	*		$salida = str_replace($objetivo, "<span style='background-color:yellow'>".$g."</span>", $modelData);
-	*	}else{
-	*		$salida = $modelData;
-	*	}
-	*	return $salida." ".$g;
-	*}
-	**/
 }

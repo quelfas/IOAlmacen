@@ -131,4 +131,6 @@ class Entrada extends CActiveRecord
 			 return CHtml::link($value1, array('entrada/view', 'id'=>$modelData));
 		}
 	}
+
+	
 }

@@ -60,11 +60,11 @@ $('#Devolucion_productoID').on('change', function() {
 		//por politicas de proteccion y acceso de datos el SuperAdmin tiene acceso a un año en el rango de fechas para el manejo de devoluciones
 		//el valor para los demas es de 30 dias
 				if (Yii::app()->user->checkAccess("SuperAdmin")) {
-					//vista de un aña al superAdmin
+					//vista de un año al superAdmin
 					$rangeEnd = 360;
 					$SerchMessage = "<br>Segun politicas de control y acceso de datos";
 				} else {
-					//vista de 30 dias para no SuperAdmin
+					//vista de 30 dias para no tengan el rol de SuperAdmin
 					$rangeEnd = 30;
 					$SerchMessage = "";
 				}
@@ -88,7 +88,7 @@ $('#Devolucion_productoID').on('change', function() {
 			$volcado[]="seleccione";
 			foreach ($ListSalida as $key => $value) {
 				//print_r($value);
-				 $volcado[$value['idSalida'].".".$value['codEntrada']] = Producto::ToProductoCompleto($value['codProducto'])." Salida:".$value['fecha'];
+				 $volcado[$value['idSalida'].".".$value['codEntrada'].".".$value['codProducto']] = Producto::ToProductoCompleto($value['codProducto'])." Salida:".$value['fecha'];
 			}
 
 			echo $form->dropDownlist($model, 'productoID', $volcado);
@@ -98,9 +98,9 @@ $('#Devolucion_productoID').on('change', function() {
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'salidaID'); ?>
-		<?php echo $form->textField($model,'salidaID'); ?>
-		<?php echo $form->error($model,'salidaID'); ?>
+		<?php //echo $form->labelEx($model,'salidaID'); ?>
+		<?php echo $form->hiddenField($model,'salidaID'); ?>
+		<?php //echo $form->error($model,'salidaID'); ?>
 	</div>
 
 	<div class="row">

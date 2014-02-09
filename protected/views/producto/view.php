@@ -73,13 +73,9 @@ $classAsignTask = "class='active'";
  
 </ul>
 <?php 
+/////////////////////////////////////////////////////FACTURAS/////////////////////////////////////////////////////
 	if($_GET['task'] == "F"){
-		$data1 = 3;
-		$data2 = 5;
-		$data3 = 10;
-		$resultante ="echo sinh($data1+$data2*1.12)/$data3;";
-		producto::ejecutaString($resultante);
-		///
+		
  ?>
  <?php echo CHtml::link("Exportar Excel <i class='icon-download-alt icon-white'></i>",array("index","excel"=>$model->idproducto),array("class"=>"btn btn-success btn-xs")) ?>
  <hr>
@@ -104,6 +100,7 @@ $classAsignTask = "class='active'";
   
 </table>
 <?php  
+/////////////////////////////////////////////////////ENTRADAS/////////////////////////////////////////////////////
 	}else if($_GET['task'] == "E"){
 	//Cargando entradas
 		$consulta_entradas = Yii::app()
@@ -177,6 +174,7 @@ $classAsignTask = "class='active'";
 		</table>
 		<?php
 		}
+	/////////////////////////////////////////////////////SALIDAS/////////////////////////////////////////////////////
 	}else if($_GET['task'] == "S"){
 	//Cargando Salidas
 	echo"Salidas";

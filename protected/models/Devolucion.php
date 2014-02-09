@@ -33,13 +33,25 @@ class Devolucion extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('fecha, DocEntrada, productoID, salidaID, cantidad, Orden, AutoEntrada', 'required'),
-			array('salidaID, cantidad, AutoEntrada', 'numerical', 'integerOnly'=>true),
+			array('cantidad, AutoEntrada', 'numerical', 'integerOnly'=>true),
 			array('DocEntrada', 'length', 'max'=>150),
 			array('productoID', 'length', 'max'=>11),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, fecha, DocEntrada, productoID, salidaID, cantidad, Orden, AutoEntrada', 'safe', 'on'=>'search'),
 		);
+	}
+
+	protected function afterSave() {
+       //$this->password = sha1($this->password);
+		$multiples = explode(".",$this->salidaID);
+		$this->salidaID = strstr($this->salidaID, '.',true);
+		if ($this->AutoEntrada==1) {
+			Yii::app()->getController()->redirect('../entrada/cloneentrada.olb?id='.$multiples[1].'&cant='.$this->cantidad);
+			return parent::afterSave();
+		}else{
+			return parent::afterSave();
+		}
 	}
 
 	/**
