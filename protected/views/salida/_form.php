@@ -47,15 +47,25 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'codEntrada'); ?>
-		<h4><?php echo entrada::LinkToEntradaCompleta($_GET['CodId']); ?></h4>
-		<?php echo $form->hiddenField($model,'codEntrada',array("value"=>$_GET['CodId'])); ?>
+		<?php if ($model->isNewRecord): ?>
+			<h4><?php echo entrada::LinkToEntradaCompleta($_GET['CodId']); ?></h4>
+			<?php echo $form->hiddenField($model,'codEntrada',array("value"=>$_GET['CodId'])); ?>
+		<?php else: ?>
+			<?php echo $form->textField($model,'codEntrada'); ?>
+		<?php endif ?>
+		
 		<?php echo $form->error($model,'codEntrada'); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'codProducto'); ?>
-		<h4><?php echo Producto::LinkToProductoCompleto($_GET['prodId']); ?></h4> 
-		<?php echo $form->hiddenField($model,'codProducto',array("value"=>$_GET['prodId'])); ?>
+		<?php if ($model->isNewRecord): ?>
+			<h4><?php echo Producto::LinkToProductoCompleto($_GET['prodId']); ?></h4> 
+			<?php echo $form->hiddenField($model,'codProducto',array("value"=>$_GET['prodId'])); ?>
+		<?php else: ?>
+			<?php echo $form->textField($model,'codProducto'); ?>
+		<?php endif ?>
+		
 		<?php echo $form->error($model,'codProducto'); ?>
 	</div>
 

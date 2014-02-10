@@ -7,7 +7,7 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Create Salida', 'url'=>array('create')),
+	//array('label'=>'Create Salida', 'url'=>array('create')),
 	array('label'=>'Manage Salida', 'url'=>array('admin')),
 );
 ?>

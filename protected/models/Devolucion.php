@@ -19,6 +19,7 @@ class Devolucion extends CActiveRecord
 	 * @return string the associated database table name
 	 */
 	public $Devolucion_salidaID;
+	public $DevolucionEntrada;
 	public function tableName()
 	{
 		return 'devolucion';
@@ -42,12 +43,20 @@ class Devolucion extends CActiveRecord
 		);
 	}
 
-	protected function afterSave() {
-       //$this->password = sha1($this->password);
+	public function beforeSave($value='')
+	{
 		$multiples = explode(".",$this->salidaID);
 		$this->salidaID = strstr($this->salidaID, '.',true);
+		$this->productoID = $multiples[2];
+		$this->DevolucionEntrada = $multiples[1];
+		return parent::beforeSave();
+	}
+
+	protected function afterSave() {
+       //$this->password = sha1($this->password);
+		//$multiples = explode(".",$this->salidaID);
 		if ($this->AutoEntrada==1) {
-			Yii::app()->getController()->redirect('../entrada/cloneentrada.olb?id='.$multiples[1].'&cant='.$this->cantidad);
+			Yii::app()->getController()->redirect('../entrada/cloneentrada.olb?id='.$this->DevolucionEntrada.'&cant='.$this->cantidad);
 			return parent::afterSave();
 		}else{
 			return parent::afterSave();
